@@ -1,0 +1,12 @@
+{
+  "name": "curso_nodejs_solid",
+  "version": "1.0.0",
+  "description": "Estudando o curso de excelente qualidade do professor Rodrigo Manguinho na plataforma da Udemy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
