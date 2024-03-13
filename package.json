@@ -4,8 +4,8 @@
   "description": "Estudando o curso de excelente qualidade do professor Rodrigo Manguinho na plataforma da Udemy",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "test:staged": "jest"
+    "test": "jest --passWithNoTests",
+    "test:staged": "jest --passWithNoTests"
   },
   "keywords": [],
   "author": "",
