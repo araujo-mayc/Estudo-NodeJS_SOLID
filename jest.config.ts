@@ -1,16 +1,19 @@
+import type { Config } from '@jest/types';
 
-import type {Config} from 'jest';
-
-const config: Config = {
+const config: Config.InitialOptions = {
   roots: ['<rootDir>/src'],
-  collectCoverage: true,
   collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
-  coverageDirectory: "coverage",
-  coverageProvider: "v8",
-  testEnvironment: "node",
+  coverageDirectory: 'coverage',
+  testEnvironment: 'node',
+
+  preset: 'ts-jest',
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   transform: {
-    '.+\\.ts$': 'ts-jest'
-  }
+    '^.+\\.tsx?$': 'ts-jest',
+  },
+  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.[jt]sx?$',
+
+  
 };
 
 export default config;
