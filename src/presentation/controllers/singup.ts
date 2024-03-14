@@ -1,9 +1,6 @@
-import { InvalidParamError } from "../erros/invalid-param-error"
-import { MissingParamError } from "../erros/missing-param-error"
-import { badRequest } from "../helpers/http-helper"
-import { Controller } from "../protocols/controller"
-import { EmailValidator } from "../protocols/email-validator"
-import { HttpRequest, HttpResponse } from "../protocols/http"
+import { InvalidParamError, MissingParamError } from "../erros"
+import { badRequest, serverError } from "../helpers/http-helper"
+import { HttpRequest, HttpResponse, Controller, EmailValidator } from "../protocols"
 
 export class SingUpController implements Controller {
     private readonly emailValidator: EmailValidator
@@ -12,20 +9,21 @@ export class SingUpController implements Controller {
         this.emailValidator = emailValidator
     }
     handle(httpRequest: HttpRequest): HttpResponse {
-        const requiredFields = ['name', 'email', 'password', 'passwordConfirmation']
-        for (const field of requiredFields){
-            if (!httpRequest.body[field]) {
-                return badRequest(new MissingParamError(field))
+        try {
+            const requiredFields = ['name', 'email', 'password', 'passwordConfirmation']
+            for (const field of requiredFields){
+                if (!httpRequest.body[field]) {
+                    return badRequest(new MissingParamError(field))
+                }
             }
+            const isValid = this.emailValidator.isValid(httpRequest.body.email)
+            if (!isValid) {
+                return badRequest(new InvalidParamError('email'))
+            }  
+        } catch (error) {
+            return serverError()
         }
-        const isValid = this.emailValidator.isValid(httpRequest.body.email)
-        if (!isValid) {
-            return badRequest(new InvalidParamError('email'))
-        }
-        
-        return { //caso nada aconteça
-            statusCode: 500,
-            body: new Error('Internal Error')
-        }
+        // código inacessível mas necessário de alguma forma
+        return serverError()
     }
 }
